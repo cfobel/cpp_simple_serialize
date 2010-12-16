@@ -13,6 +13,7 @@ int main(int argc, char** argv) {
         values[i] = i;
     }
 
+    // Write values vector data to file.
     ofstream output;
     output.open("example.txt", ios::out | ios::binary);
     for(int i = 0; i < values.size(); i++) {
@@ -21,17 +22,20 @@ int main(int argc, char** argv) {
     output << endl;
     output.close();
 
-    for(int i = 0; i < values.size(); i++) {
-        values[i] = 0;
-    }
+    values.clear();
 
+    // Read values vector data from file.
     ifstream input;
     input.open("example.txt", ios::in | ios::binary);
-    for(int i = 0; i < values.size(); i++) {
-        input >> values[i];
+    while(input.good()) {
+        uint16_t i;
+        if(input >> i) {
+            values.push_back(i);
+        }
     }
     input.close();
 
+    // Write values vector data to stdout.
     for(int i = 0; i < values.size(); i++) {
         cout << " " << values[i];
     }
